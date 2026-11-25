@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NLP LAB — Explore How Language Becomes Data</title><link rel="stylesheet" href="style.css"></head><body>
+<nav><b>NLP LAB</b><a href="#home">Home</a><a href="#vocab">Vocabulary Builder</a><a href="#tok">Tokenization</a><a href="#emb">Embedding Visualizer</a><a href="#about">About</a></nav>
+<header id="home"><h1>NLP LAB — Explore How Language Becomes Data</h1>
+<p class="m">Text → Tokens → Vocabulary → Token IDs → Embeddings → Visualization</p>
+<div id="prog"><span id="p1">1 · Vocabulary</span><span id="p2">2 · Tokenization</span><span id="p3">3 · Embeddings</span></div></header>
+<div id="tip" hidden></div>
+<main>
+<section id="vocab"><h2>Stage 1 · Vocabulary Builder</h2>
+<p class="m">A <b>token</b> <i class="info" data-t="Token">ⓘ</i> is one unit of text. The <b>vocabulary</b> <i class="info" data-t="Vocabulary">ⓘ</i> is the list of unique tokens, each with a <b>Token ID</b> <i class="info" data-t="Token ID">ⓘ</i>. Text is lowercased and split into words and punctuation.</p>
+<textarea id="vIn" placeholder="Paste text or vocabulary here…"></textarea>
+<div class="row"><button id="vAdd">Add Vocabulary</button><button id="vSample" class="s">Load Sample Dataset</button><button id="vReset" class="s">Reset Workspace</button><input id="vOne" placeholder="one word"><button id="vOneBtn" class="s">Add Word</button><input type="file" id="vFile" accept=".txt"><button id="vCsv" class="s">Download CSV</button></div>
+<div id="vStats" class="stats"></div>
+<div class="row"><input id="vQ" placeholder="Search tokens…"><select id="vSort"><option value="tid">Sort: Token ID</option><option value="alpha">Sort: A–Z</option><option value="freq">Sort: Frequency</option></select></div>
+<div class="scroll"><table id="vTbl"><thead><tr><th>TID</th><th>Token</th><th>Count</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+<p class="m"><b>Token frequency</b> <i class="info" data-t="Token Frequency">ⓘ</i> counts how often one token appears. <b>Vocabulary size</b> <i class="info" data-t="Vocabulary Size">ⓘ</i> counts how many <em>different</em> tokens exist. "the the the" → frequency of "the" = 3, vocabulary size = 1. Removing a token re-numbers later IDs.</p></section>
+
+<section id="tok"><h2>Stage 2 · Tokenization Lab</h2>
+<textarea id="tokIn" placeholder="Type a sentence or paragraph…"></textarea>
+<div class="row"><select id="mode"><option value="word">Word-level</option><option value="char">Character-level</option><option value="subword">Subword (greedy longest match)</option></select>
+<label><input type="radio" name="h" value="unk" checked> Replace unknown words with [UNK] <i class="info" data-t="UNK Token">ⓘ</i></label>
+<label><input type="radio" name="h" value="split"> Split unknown words into subwords <i class="info" data-t="Subword Tokenization">ⓘ</i></label></div>
+<div class="row"><button id="tokGo">Tokenize</button><button id="tokClear" class="s">Clear</button><button id="tokSample" class="s">Sample Sentence</button><button id="tokExport" class="s">Export Results</button><span id="live" class="m"></span></div>
+<div id="tokOut"></div><div id="tokInfo" class="note" hidden></div>
+<p class="m">Modern tokenizers (BPE, WordPiece) use subwords, so they rarely need [UNK]. An unknown word is not an error — it just isn't in <em>this</em> vocabulary.</p></section>
+
+<section id="emb"><h2>Stage 3 · Embedding Visualizer</h2>
+<p class="m">Uses the words from Stage 2. A <b>vector</b> <i class="info" data-t="Vector">ⓘ</i> is a list of numbers; an <b>embedding</b> <i class="info" data-t="Embedding">ⓘ</i> is a vector that represents a word. Token IDs are <em>not</em> embeddings.</p>
+<div class="row"><button id="tSpell" class="tab on">A · Spelling-Based (Character / Orthographic) <i class="info" data-t="Spelling-Based Representation">ⓘ</i></button><button id="tSem" class="tab">B · Meaning-Based <i class="info" data-t="Meaning-Based Representation">ⓘ</i></button><button id="resetView" class="s">Reset View</button><button id="tDim" class="s">Switch to 2D</button><button id="tAuto" class="s">⏸ Pause rotation</button></div>
+<div id="embNote" class="note"></div>
+<canvas id="cv" width="900" height="520"></canvas><div id="legend" class="row"></div><div id="hov" class="note">Hover a point to inspect it. Click points to pick words A and B. Scroll to zoom, drag to pan (2D) or rotate (3D).</div>
+<h3>Comparison <i class="info" data-t="Cosine Similarity">ⓘ</i></h3>
+<div class="row">Word A <select id="wa"></select> Word B <select id="wb"></select></div><div id="cmp" class="stats"></div>
+<div class="scroll"><table><thead><tr><th>Feature</th><th>Spelling-Based</th><th>Meaning-Based</th></tr></thead><tbody>
+<tr><td>Main focus</td><td>Characters and spelling</td><td>Meaning and context</td></tr><tr><td>Similarity</td><td>Similar letter patterns</td><td>Similar concepts</td></tr>
+<tr><td>Example</td><td>Cat and Bat</td><td>Cat and Dog</td></tr><tr><td>Representation</td><td>Character features</td><td>Semantic vectors</td></tr></tbody></table></div>
+<div id="pipe" class="note"></div></section>
+
+<section id="quiz"><h2>Mini Quiz</h2><div id="qz"></div><button id="qGo">Check answers</button> <span id="qRes"></span></section>
+<section id="about"><h2>About</h2><p class="m">NLP LAB runs entirely in your browser (no server, no paid API). Spelling embeddings are real character features (letter frequencies, hashed character bigrams, length). Meaning embeddings are <b>not</b> a trained language model: they use a small hand-made concept lexicon and are a simplified educational approximation. Both are projected to 2D or 3D with PCA, which can distort distances.</p></section>
+</main><script src="app.js"></script></body></html>
